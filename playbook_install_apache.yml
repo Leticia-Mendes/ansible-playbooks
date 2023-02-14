@@ -1,0 +1,36 @@
+---
+- name: "install httpd apache"
+  hosts: all
+  become: true
+  tasks:
+
+  - name: install httpd
+    yum:
+      name: httpd
+      state: installed
+    when: ansible_os_family == "RedHat"
+
+  - name: install apache
+    apt:
+      name: apache2
+      state: latest
+      update_cache: yes
+    when: ansible_os_family == "Debian"
+
+  - name: start httpd
+    service:
+      name: httpd
+      state: started
+    when: ansible_os_family == "RedHat"
+
+  - name: start apache
+    service:
+      name: apache2
+      state: started
+    when: ansible_os_family == "Debian"
+
+  - name: copy index.html
+    copy:
+      src: /opt/ansible/html/index.html
+      dest: /var/www/html
+      mode: 0666
