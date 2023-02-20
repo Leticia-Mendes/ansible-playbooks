@@ -1,11 +1,11 @@
 ---
-- name: Playbook to test Vault
+- name: "Clone a git repository"
   hosts: all
   become: true
   vars_files:
     - vault-pass.yml
   tasks:
-  - name: clone a git repo
+    - name: "clone a git repo"
     git:
       repo: https://Leticia-Mendes:{{ password }}@github.com/Leticia-Mendes/vault.git
       dest: /opt/ansadmin/test-vault
